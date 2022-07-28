@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Handlers\CommandHandlers" />
+      <Folder Include="Handlers\QueryHandlers" />
+      <Folder Include="Models\Commands" />
+      <Folder Include="Models\Queries" />
+      <Folder Include="Utility" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\LockManagementSystem.Domain\LockManagementSystem.Domain.csproj" />
+      <ProjectReference Include="..\LockManagementSystem.Infrastructure\LockManagementSystem.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="11.0.1" />
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    </ItemGroup>
+
+</Project>
