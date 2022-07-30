@@ -1,5 +1,6 @@
 using AutoMapper;
 using LockManagementSystem.Application.Models.Commands.Employee;
+using LockManagementSystem.Application.Models.Commands.EventLog;
 using LockManagementSystem.Application.Models.Commands.Lock;
 using LockManagementSystem.Application.Models.Commands.Office;
 using LockManagementSystem.Application.Models.Responses;
@@ -27,5 +28,10 @@ public class MappingProfile : Profile
         CreateMap<LockEntity, LockResponse>();
         CreateMap<LockEntity, CreateLockResponse>();
         CreateMap<LockEntity, UpdateLockResponse>();
+        
+        //Event Log
+        CreateMap<CreateEventLogCommand, EventLogEntity>();
+        CreateMap<EventLogEntity, EventLogResponse>();
+        CreateMap<EventLogEntity, CreateEventLogResponse>();
     }
 }

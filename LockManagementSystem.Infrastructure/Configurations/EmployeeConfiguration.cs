@@ -12,3 +12,27 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<EmployeeEntity>
             .HasForeignKey<EmployeeDetailEntity>(e => e.EmployeeId);
     }
 }
+
+public class EmployeeDetailConfiguration : IEntityTypeConfiguration<EmployeeDetailEntity>
+{
+    public void Configure(EntityTypeBuilder<EmployeeDetailEntity> builder)
+    {
+        builder.Property(ed => ed.FirstName)
+            .IsRequired();
+        
+        builder.Property(ed => ed.LastName)
+            .IsRequired();
+        
+        builder.Property(ed => ed.Email)
+            .IsRequired();
+        
+        builder.Property(ed => ed.Gender)
+            .IsRequired();
+        
+        builder.Property(ed => ed.EmploymentDate)
+            .IsRequired();
+        
+        builder.HasIndex(ed => ed.Email)
+            .IsUnique();
+    }
+}

@@ -7,28 +7,29 @@ public class Entity : BaseEntity
 {
     protected Entity()
     {
-        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
     
-    public Guid CreatedBy { get; set; }
+    public Guid UpdatedBy { get; set; }
     
-    public DateTime CreatedAt { get; set; } 
+    public DateTime UpdatedAt { get; set; }
+    
 }
 
 public class BaseEntity
 {
     protected BaseEntity()
     {
-        UpdatedAt = DateTime.UtcNow;    
+        CreatedAt = DateTime.UtcNow;    
     }
     
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }   
+    public Guid Id { get; set; }
+
+    public Guid CreatedBy { get; set; }
     
-    public Guid UpdatedBy { get; set; }
-    
-    public DateTime UpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } 
 
     public bool IsDeprecated { get; set; }
 
