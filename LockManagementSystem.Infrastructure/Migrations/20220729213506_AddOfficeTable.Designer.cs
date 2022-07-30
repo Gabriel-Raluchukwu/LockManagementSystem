@@ -3,6 +3,7 @@ using System;
 using LockManagementSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LockManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(LockManagementWriteContext))]
-    partial class LockManagementWriteContextModelSnapshot : ModelSnapshot
+    [Migration("20220729213506_AddOfficeTable")]
+    partial class AddOfficeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

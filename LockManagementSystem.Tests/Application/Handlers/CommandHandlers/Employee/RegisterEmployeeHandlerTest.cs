@@ -18,7 +18,7 @@ public class RegisterEmployeeHandlerTest
         _readRepositoryMock = new Mock<IReadRepository<EmployeeDetailEntity>>();
         _command = new RegisterEmployeeCommand
         {
-            Address = "No 3, Johnsons street",
+            Address = "No 3, Johnson's street",
             Country = "Nigeria",
             Email = "user@clay.com",
             Gender = "Male",

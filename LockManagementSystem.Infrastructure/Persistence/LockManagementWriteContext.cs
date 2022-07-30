@@ -1,6 +1,5 @@
 using System.Reflection;
 using LockManagementSystem.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace LockManagementSystem.Infrastructure.Persistence;
 
@@ -13,6 +12,7 @@ public class LockManagementWriteContext : DbContext
     
     public DbSet<EmployeeEntity> Employees { get; set; }
     public DbSet<EmployeeDetailEntity> EmployeeDetails { get; set; }
+    public DbSet<OfficeEntity> Offices { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

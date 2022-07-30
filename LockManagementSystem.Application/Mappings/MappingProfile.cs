@@ -1,5 +1,6 @@
 using AutoMapper;
 using LockManagementSystem.Application.Models.Commands.Employee;
+using LockManagementSystem.Application.Models.Commands.Office;
 using LockManagementSystem.Application.Models.Responses;
 using LockManagementSystem.Domain.Entities;
 
@@ -9,8 +10,15 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        //Employee
         CreateMap<RegisterEmployeeCommand, EmployeeDetailEntity>();
         CreateMap<EmployeeDetailEntity, EmployeeDetailsResponse>();
         CreateMap<RegisterEmployeeCommand, EmployeeDetailsResponse>();
+        
+        //Office
+        CreateMap<CreateOfficeCommand, OfficeEntity>();
+        CreateMap<OfficeEntity, OfficeResponse>();
+        CreateMap<OfficeEntity, CreateOfficeResponse>();
+        CreateMap<OfficeEntity, UpdateOfficeResponse>();
     }
 }
