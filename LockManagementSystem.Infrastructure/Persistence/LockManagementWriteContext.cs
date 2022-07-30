@@ -13,6 +13,7 @@ public class LockManagementWriteContext : DbContext
     public DbSet<EmployeeEntity> Employees { get; set; }
     public DbSet<EmployeeDetailEntity> EmployeeDetails { get; set; }
     public DbSet<OfficeEntity> Offices { get; set; }
+    public DbSet<LockEntity> Locks { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

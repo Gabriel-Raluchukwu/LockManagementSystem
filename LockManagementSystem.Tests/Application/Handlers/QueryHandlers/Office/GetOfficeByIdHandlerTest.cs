@@ -32,7 +32,7 @@ public class GetOfficeByIdHandlerTest
     }
 
     [Fact]
-    public async Task GetOfficeId_InvalidId_ThrowsNotFoundException()
+    public async Task GetOfficeById_InvalidId_ThrowsNotFoundException()
     {
         _readRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<OfficeEntity,bool>>>()))
             .ReturnsAsync(() => null);

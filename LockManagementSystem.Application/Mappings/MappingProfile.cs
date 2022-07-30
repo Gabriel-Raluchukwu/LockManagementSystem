@@ -1,5 +1,6 @@
 using AutoMapper;
 using LockManagementSystem.Application.Models.Commands.Employee;
+using LockManagementSystem.Application.Models.Commands.Lock;
 using LockManagementSystem.Application.Models.Commands.Office;
 using LockManagementSystem.Application.Models.Responses;
 using LockManagementSystem.Domain.Entities;
@@ -20,5 +21,11 @@ public class MappingProfile : Profile
         CreateMap<OfficeEntity, OfficeResponse>();
         CreateMap<OfficeEntity, CreateOfficeResponse>();
         CreateMap<OfficeEntity, UpdateOfficeResponse>();
+        
+        //Lock
+        CreateMap<CreateLockCommand, LockEntity>();
+        CreateMap<LockEntity, LockResponse>();
+        CreateMap<LockEntity, CreateLockResponse>();
+        CreateMap<LockEntity, UpdateLockResponse>();
     }
 }

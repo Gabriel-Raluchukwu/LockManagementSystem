@@ -5,6 +5,11 @@ namespace LockManagementSystem.Domain.Entities;
 
 public class Entity : BaseEntity
 {
+    protected Entity()
+    {
+        CreatedAt = DateTime.UtcNow;
+    }
+    
     public Guid CreatedBy { get; set; }
     
     public DateTime CreatedAt { get; set; } 
@@ -12,6 +17,11 @@ public class Entity : BaseEntity
 
 public class BaseEntity
 {
+    protected BaseEntity()
+    {
+        UpdatedAt = DateTime.UtcNow;    
+    }
+    
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }   
