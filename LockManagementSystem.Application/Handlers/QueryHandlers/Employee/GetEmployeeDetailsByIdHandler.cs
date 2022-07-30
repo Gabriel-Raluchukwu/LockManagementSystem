@@ -7,18 +7,18 @@ using LockManagementSystem.Domain.Entities;
 
 namespace LockManagementSystem.Application.Handlers.QueryHandlers.Employee;
 
-public class GetEmployeeDetailsByIdQuery : IRequestHandler<GetEmployeeDetailQuery, ResponseModel<EmployeeDetailsResponse>>
+public class GetEmployeeDetailsByIdHandler : IRequestHandler<GetEmployeeDetailQuery, ResponseModel<EmployeeDetailsResponse>>
 {
     private readonly IReadRepository<EmployeeDetailEntity> _readRepository;
 
-    public GetEmployeeDetailsByIdQuery(IReadRepository<EmployeeDetailEntity> readRepository)
+    public GetEmployeeDetailsByIdHandler(IReadRepository<EmployeeDetailEntity> readRepository)
     {
         _readRepository = readRepository;
     }
     
     public async Task<ResponseModel<EmployeeDetailsResponse>> Handle(GetEmployeeDetailQuery request, CancellationToken cancellationToken)
     {
-        var employeeDetail = await _readRepository.GetByAsync(p => p.Id == request.Id);
+        var employeeDetail = await _readRepository.GetByAsync(p => p.Id == request.Id && !p.IsDeprecated);
 
         if (employeeDetail == null)
         {

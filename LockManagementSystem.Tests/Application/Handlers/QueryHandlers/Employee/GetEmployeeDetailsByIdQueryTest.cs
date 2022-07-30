@@ -10,6 +10,7 @@ public class GetEmployeeDetailsByIdQueryTest
 {
     private readonly Mock<IReadRepository<EmployeeDetailEntity>> _readRepositoryMock;
     private readonly GetEmployeeDetailQuery _query;
+    private readonly CancellationToken _cancellationToken;
     
     public GetEmployeeDetailsByIdQueryTest()
     {
@@ -18,17 +19,17 @@ public class GetEmployeeDetailsByIdQueryTest
         {
             Id = Guid.NewGuid()
         };
+        _cancellationToken = new CancellationToken();
     }
     
     [Fact]
     public async Task GetEmployeeById_ValidId_ReturnsEmployeeDetails()
     {
-        var cancellationToken = new CancellationToken();
         _readRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<EmployeeDetailEntity,bool>>>()))
             .ReturnsAsync(new EmployeeDetailEntity());
 
-        var handler = new GetEmployeeDetailsByIdQuery(_readRepositoryMock.Object);
-        var result = await handler.Handle(_query, cancellationToken);
+        var handler = new GetEmployeeDetailsByIdHandler(_readRepositoryMock.Object);
+        var result = await handler.Handle(_query, _cancellationToken);
         
         result.Data.Should().NotBeNull();
     }
@@ -36,12 +37,11 @@ public class GetEmployeeDetailsByIdQueryTest
     [Fact]
     public async Task GetEmployeeById_InvalidId_ThrowsNotFoundException()
     {
-        var cancellationToken = new CancellationToken();
         _readRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<EmployeeDetailEntity,bool>>>()))
             .ReturnsAsync(() => null);
 
-        var handler = new GetEmployeeDetailsByIdQuery(_readRepositoryMock.Object);
-        var result = async () =>  await handler.Handle(_query, cancellationToken);
+        var handler = new GetEmployeeDetailsByIdHandler(_readRepositoryMock.Object);
+        var result = async () =>  await handler.Handle(_query, _cancellationToken);
 
 
         await result.Should().ThrowAsync<NotFoundException>()

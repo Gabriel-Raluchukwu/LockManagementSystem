@@ -21,7 +21,7 @@ public class UpdateOfficeHandler : IRequestHandler<UpdateOfficeCommand, Response
 
     public async Task<ResponseModel<UpdateOfficeResponse>> Handle(UpdateOfficeCommand command, CancellationToken cancellationToken)
     {
-        var office = await _readRepository.GetByAsync(p => p.Id == command.Id);
+        var office = await _readRepository.GetByAsync(p => p.Id == command.Id && !p.IsDeprecated);
         if (office is null)
         {
             throw new NotFoundException("Office not found.");
@@ -53,6 +53,7 @@ public class UpdateOfficeHandler : IRequestHandler<UpdateOfficeCommand, Response
         entity.State = command.Name;
         entity.NumberOfDoors = command.NumberOfDoors;
         entity.NumberOfLocks = command.NumberOfLocks;
+        entity.UpdatedAt = DateTime.UtcNow;
         return entity;
     }
 }

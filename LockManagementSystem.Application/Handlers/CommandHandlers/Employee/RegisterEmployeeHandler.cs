@@ -29,7 +29,7 @@ public class RegisterEmployeeHandler : IRequestHandler<RegisterEmployeeCommand, 
             command.Email = generatedEmail.ToLower();
         }
 
-        var duplicate = await _readRepository.GetByAsync(p => p.Email.ToLower() == command.Email);
+        var duplicate = await _readRepository.GetByAsync(p => p.Email.ToLower() == command.Email && !p.IsDeprecated);
         if (duplicate is not null)
         {
             throw new BadRequestException($"Email {command.Email} already exists.");

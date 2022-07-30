@@ -17,7 +17,7 @@ public class GetOfficesHandler : IRequestHandler<GetOfficesQuery, ResponseModel<
 
     public async Task<ResponseModel<PagedResponse<OfficeResponse>>> Handle(GetOfficesQuery query, CancellationToken cancellationToken)
     {
-        var pagedResult = await _readRepository.GetPagedMultiple(query.PageNumber, query.PageSize, p => p.Name);
+        var pagedResult = await _readRepository.GetPagedMultiple(query.PageNumber, query.PageSize, p => !p.IsDeprecated,p => p.Name);
         
         return new ResponseModel<PagedResponse<OfficeResponse>>
         {
