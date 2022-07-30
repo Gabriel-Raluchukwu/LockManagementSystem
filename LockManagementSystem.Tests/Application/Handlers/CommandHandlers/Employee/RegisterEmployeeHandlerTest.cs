@@ -8,15 +8,17 @@ namespace LockManagementSystem.Tests.Application.Handlers.CommandHandlers.Employ
 
 public class RegisterEmployeeHandlerTest
 {
-    private readonly Mock<IWriteRepository<EmployeeDetailEntity>> _writeRepositoryMock;
-    private readonly Mock<IReadRepository<EmployeeDetailEntity>> _readRepositoryMock;
+    private readonly Mock<IReadRepository<OfficeEntity>> _officeReadRepositoryMock;
+    private readonly Mock<IWriteRepository<EmployeeDetailEntity>> _employeeDetailWriteRepositoryMock;
+    private readonly Mock<IReadRepository<EmployeeDetailEntity>> _employeeDetailReadRepositoryMock;
     private readonly RegisterEmployeeCommand _command;
     private readonly CancellationToken _cancellationToken;
 
     public RegisterEmployeeHandlerTest()
     {
-        _writeRepositoryMock = new Mock<IWriteRepository<EmployeeDetailEntity>>();
-        _readRepositoryMock = new Mock<IReadRepository<EmployeeDetailEntity>>();
+        _officeReadRepositoryMock = new Mock<IReadRepository<OfficeEntity>>();
+        _employeeDetailWriteRepositoryMock = new Mock<IWriteRepository<EmployeeDetailEntity>>();
+        _employeeDetailReadRepositoryMock = new Mock<IReadRepository<EmployeeDetailEntity>>();
         _command = new RegisterEmployeeCommand
         {
             Address = "No 3, Johnson's street",
@@ -37,11 +39,14 @@ public class RegisterEmployeeHandlerTest
     [Fact]
     public async Task RegisterEmployee_NewEmployee_ReturnsSuccess()
     {
-        _readRepositoryMock.Setup(r => r.GetByAsync(p => p.Email.ToLower() == _command.Email))
+        _officeReadRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<OfficeEntity, bool>>>()))
+            .ReturnsAsync(() => new OfficeEntity{Id = _command.OfficeId});
+        _employeeDetailReadRepositoryMock.Setup(r => r.GetByAsync(p => p.Email.ToLower() == _command.Email))
             .ReturnsAsync(() => null);
-        _writeRepositoryMock.Setup(r => r.SaveChangesAsync(_cancellationToken)).ReturnsAsync(1);
+        _employeeDetailWriteRepositoryMock.Setup(r => r.SaveChangesAsync(_cancellationToken)).ReturnsAsync(1);
 
-        var handler = new RegisterEmployeeHandler(_writeRepositoryMock.Object, _readRepositoryMock.Object);
+        var handler = new RegisterEmployeeHandler(_employeeDetailWriteRepositoryMock.Object, _employeeDetailReadRepositoryMock.Object,
+            _officeReadRepositoryMock.Object);
         var result = await handler.Handle(_command, _cancellationToken);
 
         result.Data.Should().NotBeNull();
@@ -49,13 +54,30 @@ public class RegisterEmployeeHandlerTest
     }
 
     [Fact]
+    public async Task RegisterEmployee_InvalidOfficeId_ThrowsNotFoundException()
+    {
+        _officeReadRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<OfficeEntity, bool>>>()))
+            .ReturnsAsync(() => null);
+
+        var handler = new RegisterEmployeeHandler(_employeeDetailWriteRepositoryMock.Object, _employeeDetailReadRepositoryMock.Object,
+            _officeReadRepositoryMock.Object);
+        var result = async () =>  await handler.Handle(_command, _cancellationToken);
+        
+        await result.Should().ThrowAsync<NotFoundException>()
+            .WithMessage($"Office not found.");
+    }
+    
+    [Fact]
     public async Task RegisterEmployee_DuplicateEmail_ThrowsBadRequestException()
     {
-        _readRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<EmployeeDetailEntity,bool>>>()))
+        _officeReadRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<OfficeEntity, bool>>>()))
+            .ReturnsAsync(() => new OfficeEntity{Id = _command.OfficeId});
+        _employeeDetailReadRepositoryMock.Setup(r => r.GetByAsync(It.IsAny<Expression<Func<EmployeeDetailEntity,bool>>>()))
             .ReturnsAsync(new EmployeeDetailEntity());
-        _writeRepositoryMock.Setup(r => r.SaveChangesAsync(_cancellationToken)).ReturnsAsync(1);
+        _employeeDetailWriteRepositoryMock.Setup(r => r.SaveChangesAsync(_cancellationToken)).ReturnsAsync(1);
 
-        var handler = new RegisterEmployeeHandler(_writeRepositoryMock.Object, _readRepositoryMock.Object);
+        var handler = new RegisterEmployeeHandler(_employeeDetailWriteRepositoryMock.Object, _employeeDetailReadRepositoryMock.Object,
+            _officeReadRepositoryMock.Object);
         var result = async () =>  await handler.Handle(_command, _cancellationToken);
         
         await result.Should().ThrowAsync<BadRequestException>()

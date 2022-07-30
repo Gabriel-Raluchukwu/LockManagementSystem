@@ -10,18 +10,25 @@ namespace LockManagementSystem.Application.Handlers.CommandHandlers.Employee;
 
 public class RegisterEmployeeHandler : IRequestHandler<RegisterEmployeeCommand, ResponseModel<EmployeeDetailsResponse>>
 {
-    private readonly IWriteRepository<EmployeeDetailEntity> _writeRepository;
-    private readonly IReadRepository<EmployeeDetailEntity> _readRepository;
+    private readonly IReadRepository<OfficeEntity> _officeReadRepository;
+    private readonly IWriteRepository<EmployeeDetailEntity> _employeeDetailWriteRepository;
+    private readonly IReadRepository<EmployeeDetailEntity> _employeeDetailReadRepository;
 
-    public RegisterEmployeeHandler(IWriteRepository<EmployeeDetailEntity> writeRepository, IReadRepository<EmployeeDetailEntity> readRepository)
+    public RegisterEmployeeHandler(IWriteRepository<EmployeeDetailEntity> employeeDetailWriteRepository, IReadRepository<EmployeeDetailEntity> employeeDetailReadRepository,
+        IReadRepository<OfficeEntity> officeReadRepository)
     {
-        _writeRepository = writeRepository;
-        _readRepository = readRepository;
+        _officeReadRepository = officeReadRepository;
+        _employeeDetailWriteRepository = employeeDetailWriteRepository;
+        _employeeDetailReadRepository = employeeDetailReadRepository;
     }
     
     public async Task<ResponseModel<EmployeeDetailsResponse>> Handle(RegisterEmployeeCommand command, CancellationToken cancellationToken)
     {
-        //TODO: Add office validation
+        var office = await _officeReadRepository.GetByAsync(p => p.Id == command.OfficeId && !p.IsDeprecated);
+        if (office is null)
+        {
+            throw new NotFoundException("Office not found.");
+        }
         
         if (string.IsNullOrWhiteSpace(command.Email))
         {
@@ -29,7 +36,7 @@ public class RegisterEmployeeHandler : IRequestHandler<RegisterEmployeeCommand, 
             command.Email = generatedEmail.ToLower();
         }
 
-        var duplicate = await _readRepository.GetByAsync(p => p.Email.ToLower() == command.Email && !p.IsDeprecated);
+        var duplicate = await _employeeDetailReadRepository.GetByAsync(p => p.Email.ToLower() == command.Email && !p.IsDeprecated);
         if (duplicate is not null)
         {
             throw new BadRequestException($"Email {command.Email} already exists.");
@@ -37,9 +44,9 @@ public class RegisterEmployeeHandler : IRequestHandler<RegisterEmployeeCommand, 
 
         var entity = LockMapper.Mapper.Map<EmployeeDetailEntity>(command);
         
-        _writeRepository.Insert(entity);
+        _employeeDetailWriteRepository.Insert(entity);
 
-        var status = await _writeRepository.SaveChangesAsync(cancellationToken) > 0;
+        var status = await _employeeDetailWriteRepository.SaveChangesAsync(cancellationToken) > 0;
 
         if (!status)
         {
