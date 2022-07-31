@@ -13,7 +13,6 @@ public class Entity : BaseEntity
     public Guid UpdatedBy { get; set; }
     
     public DateTime UpdatedAt { get; set; }
-    
 }
 
 public class BaseEntity

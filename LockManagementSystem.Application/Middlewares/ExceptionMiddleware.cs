@@ -39,6 +39,12 @@ public class ExceptionMiddleware
             response.StatusCode = (int) HttpStatusCode.NotFound;
             responseModel.Message = notFoundException.Message;
         }
+        catch (UnauthorizedAccessException unauthorizedAccessException)
+        {
+            _logger.LogError(unauthorizedAccessException, "Unauthorized Access");
+            response.StatusCode = (int) HttpStatusCode.Unauthorized;
+            responseModel.Message = unauthorizedAccessException.Message;
+        }
         catch (Exception exception)
         {
             _logger.LogError(exception, Constants.ExceptionHandlerMessage);

@@ -1,4 +1,5 @@
 using LockManagementSystem.Application.Extensions;
+using LockManagementSystem.Extensions;
 using LockManagementSystem.Infrastructure.Extensions;
 using LockManagementSystem.Infrastructure.Persistence;
 using Newtonsoft.Json.Serialization;
@@ -12,7 +13,7 @@ builder.Services.AddControllers()
         => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 builder.Services.AddPersistenceInfrastructure(configuration);
 builder.Services.RegisterMediatR();
 builder.Services.RegisterAutoMapper();

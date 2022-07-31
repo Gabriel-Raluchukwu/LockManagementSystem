@@ -3,6 +3,7 @@ using LockManagementSystem.Application.Models.Commands.Employee;
 using LockManagementSystem.Application.Models.Commands.EventLog;
 using LockManagementSystem.Application.Models.Commands.Lock;
 using LockManagementSystem.Application.Models.Commands.Office;
+using LockManagementSystem.Application.Models.Commands.Roles;
 using LockManagementSystem.Application.Models.Responses;
 using LockManagementSystem.Domain.Entities;
 
@@ -33,5 +34,15 @@ public class MappingProfile : Profile
         CreateMap<CreateEventLogCommand, EventLogEntity>();
         CreateMap<EventLogEntity, EventLogResponse>();
         CreateMap<EventLogEntity, CreateEventLogResponse>();
+        
+        //Auth
+        CreateMap<AuthResponse, SignUpResponse>().ReverseMap();
+        CreateMap<AuthResponse, SignInResponse>().ReverseMap();
+        
+        //Roles
+        CreateMap<CreateRoleCommand, RoleEntity>();
+        CreateMap<RoleEntity, RoleResponse>();
+        CreateMap<RoleEntity, CreateRoleResponse>();
+        CreateMap<RoleEntity, UpdateRoleResponse>();
     }
 }

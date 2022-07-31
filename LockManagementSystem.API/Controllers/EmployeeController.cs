@@ -17,6 +17,38 @@ public class EmployeeController : ControllerBase
     }
     
     /// <summary>
+    /// Sign up
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("signup")]
+    public async Task<ActionResult<ResponseModel<SignUpResponse>>> SignUp(SignUpCommand command)
+    {
+        var validationResult = await new SignUpCommandValidator().ValidateAsync(command);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(command);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Sign in
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("signin")]
+    public async Task<ActionResult<ResponseModel<SignInResponse>>> SignUp(SignInCommand command)
+    {
+        var validationResult = await new SignInCommandValidator().ValidateAsync(command);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(command);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
     /// Register a new employee
     /// </summary>
     /// <returns></returns>

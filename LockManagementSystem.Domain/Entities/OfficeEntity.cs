@@ -15,6 +15,8 @@ public class OfficeEntity : Entity
     public int NumberOfDoors { get; set; }
 
     public int NumberOfLocks { get; set; }
-    
+
+    public ICollection<RoleEntity> Roles { get; set; }
+
     public ICollection<LockEntity> Locks { get; set; }
 }

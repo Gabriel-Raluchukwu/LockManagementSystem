@@ -1,6 +1,5 @@
 using System.Reflection;
 using LockManagementSystem.Application.Middlewares;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
