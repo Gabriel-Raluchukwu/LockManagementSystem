@@ -27,14 +27,14 @@ public class SignInHandler : IRequestHandler<SignInCommand, ResponseModel<SignIn
         var employee = await _employeeReadRepository.GetByAsync(p => p.Email.ToLower() == command.Email && !p.IsDeprecated);
         if (employee is null)
         {
-            throw new NotFoundException("Employee not found. Please contact Clay helpdesk");
+            throw new NotFoundException("Employee not found. Please contact Clay helpdesk.");
         }
 
         var isPasswordValid = _passwordService.Verify(command.Password, employee.PasswordHash);
         
         if (!isPasswordValid)
         {
-            throw new UnauthorizedAccessException("Email or password is not valid");
+            throw new UnauthorizedAccessException("Email or password is not valid.");
         }
         
         var token = await _tokenService.GenerateToken(employee);

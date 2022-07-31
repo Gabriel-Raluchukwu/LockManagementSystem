@@ -28,6 +28,7 @@ public class CreateEventLogCommandValidator : AbstractValidator<CreateEventLogCo
         RuleFor(x => x.LockId).NotEmpty();
         RuleFor(x => x.Status).IsInEnum();
         RuleFor(x => x.Status).IsInEnum();
-        RuleFor(x => x.OccurredAt).NotEmpty();
+        RuleFor(x => x.OccurredAt).NotEmpty().WithMessage("{PropertyName} is required")
+            .Must(dateTime => dateTime <= DateTime.UtcNow).WithMessage("{PropertyName} is not valid");
     }
 }

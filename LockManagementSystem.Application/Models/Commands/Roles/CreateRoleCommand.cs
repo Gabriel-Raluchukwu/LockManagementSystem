@@ -17,6 +17,7 @@ public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     public CreateRoleCommandValidator()
     {
         RuleFor(x => x.OfficeId).NotEmpty();
-        RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
     }
 }

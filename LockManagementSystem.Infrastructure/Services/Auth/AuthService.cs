@@ -45,7 +45,7 @@ public class AuthService : IAuthService
 
     private async Task<RoleEntity> GetRole(Guid? roleId)
     {
-        if (roleId is null || roleId == Guid.Empty)
+        if (!roleId.HasValue || roleId == Guid.Empty)
         {
             // Use default 'Employee' role
             var roleName = Constants.DefaultRole.ToLower();

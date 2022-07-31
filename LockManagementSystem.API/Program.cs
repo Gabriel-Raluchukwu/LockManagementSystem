@@ -13,6 +13,7 @@ builder.Services.AddControllers()
         => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.ConfigureJwtAuthentication(configuration);
 builder.Services.ConfigureSwagger();
 builder.Services.AddPersistenceInfrastructure(configuration);
 builder.Services.RegisterMediatR();

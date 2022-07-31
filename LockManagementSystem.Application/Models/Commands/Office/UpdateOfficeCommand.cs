@@ -26,9 +26,11 @@ public class UpdateOfficeCommandValidator : AbstractValidator<UpdateOfficeComman
 {
     public UpdateOfficeCommandValidator()
     {
-        RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
         RuleFor(x => x.Description).NotEmpty();
-        RuleFor(x => x.Country).NotEmpty();
+        RuleFor(x => x.Country).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
         RuleFor(x => x.Address).NotEmpty();
         RuleFor(x => x.NumberOfDoors).NotEmpty();
     }

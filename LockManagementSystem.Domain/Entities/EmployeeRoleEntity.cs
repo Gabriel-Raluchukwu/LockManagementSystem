@@ -1,5 +1,8 @@
 namespace LockManagementSystem.Domain.Entities;
 
+/// <summary>
+/// Many to Many table mapping an employee to multiple roles
+/// </summary>
 public class EmployeeRoleEntity : BaseEntity
 {
     public Guid EmployeeId { get; set; }

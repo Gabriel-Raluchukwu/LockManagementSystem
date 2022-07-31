@@ -37,13 +37,26 @@ public class RegisterEmployeeCommandValidator : AbstractValidator<RegisterEmploy
     public RegisterEmployeeCommandValidator()
     {
         RuleFor(x => x.OfficeId).NotEmpty();
-        RuleFor(x => x.FirstName).NotEmpty();
-        RuleFor(x => x.LastName).NotEmpty();
-        RuleFor(x => x.Gender).NotEmpty();
+        RuleFor(x => x.FirstName).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
+        RuleFor(x => x.LastName).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
+        RuleFor(x => x.Gender).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
         RuleFor(x => x.EmploymentDate).NotEmpty();
-        RuleFor(x => x.PhoneNumber).NotEmpty();
-        RuleFor(x => x.Nationality).NotEmpty();
-        RuleFor(x => x.DateOfBirth).NotEmpty();
-        RuleFor(x => x.Country).NotEmpty();
+        RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[0-9]+$").WithMessage("{PropertyName} can only contain digits");
+        RuleFor(x => x.Nationality).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
+        RuleFor(x => x.DateOfBirth).NotEmpty().WithMessage("{PropertyName} is required")
+            .Must(dateTime => dateTime <= DateTime.UtcNow).WithMessage("{PropertyName} is not valid");;
+        RuleFor(x => x.Country).NotEmpty().WithMessage("{PropertyName} is required")
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters");
+
+        RuleFor(x => x.MiddleName)
+            .Matches("^[A-Za-z -]+$").WithMessage("{PropertyName} cannot contain digits or special characters")
+            .When(x => !string.IsNullOrWhiteSpace(x.MiddleName));
+        RuleFor(x => x.Email).EmailAddress().WithMessage("{PropertyName} is not valid")
+            .When(x => !string.IsNullOrWhiteSpace(x.Email));
     }
 }

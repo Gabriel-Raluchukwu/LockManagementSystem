@@ -10,9 +10,9 @@ public class Entity : BaseEntity
         UpdatedAt = DateTime.UtcNow;
     }
     
-    public Guid UpdatedBy { get; set; }
+    public Guid? UpdatedBy { get; set; }
     
-    public DateTime UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }
 
 public class BaseEntity
@@ -32,5 +32,5 @@ public class BaseEntity
 
     public bool IsDeprecated { get; set; }
 
-    public DateTime DeprecatedAt { get; set; }
+    public DateTime? DeprecatedAt { get; set; }
 }

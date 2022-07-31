@@ -27,7 +27,7 @@ public class TokenService : ITokenService
         var validTimeInSeconds = int.Parse(_configuration["TokenTTL"]);
         var expiresIn = presentDateTime.AddSeconds(validTimeInSeconds);
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes("");
+        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
 
         // Retrieve user roles
         var roles = await GetRoles(employee.Id);
