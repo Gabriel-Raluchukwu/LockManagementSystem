@@ -22,3 +22,12 @@ public class UpdateLockResponse : LockResponse
 {
     
 }
+
+public class OpenLockResponse
+{
+    public string Status { get; set; }
+    
+    public string Model { get; set; }
+    
+    public string SerialNo { get; set; }
+}

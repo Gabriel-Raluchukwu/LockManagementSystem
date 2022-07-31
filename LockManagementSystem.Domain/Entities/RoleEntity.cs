@@ -11,4 +11,6 @@ public class RoleEntity : Entity
     public OfficeEntity Office { get; set; }
     
     public List<EmployeeRoleEntity> EmployeeRoles { get; set; }
+    
+    public List<LockRoleEntity> LockRoles { get; set; }
 }

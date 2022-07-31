@@ -1,5 +1,7 @@
 using LockManagementSystem.Application.Models.Commands.Lock;
+using LockManagementSystem.Application.Models.Commands.LockRole;
 using LockManagementSystem.Application.Models.Queries.Lock;
+using LockManagementSystem.Application.Models.Queries.LockRole;
 using LockManagementSystem.Application.Models.Responses;
 using MediatR;
 
@@ -66,7 +68,7 @@ public class LockController : ControllerBase
     }
     
     /// <summary>
-    /// 
+    /// Get locks
     /// </summary>
     /// <param name="officeId"></param>
     /// <param name="pageSize"></param>
@@ -80,6 +82,71 @@ public class LockController : ControllerBase
         if (validationResult.IsValid)
         {
             return await _mediator.Send(query);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Open lock
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("open")]
+    public async Task<ActionResult<ResponseModel<OpenLockResponse>>> OpenLock(OpenLockCommand command)
+    {
+        var validationResult = await new OpenLockCommandValidator().ValidateAsync(command);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(command);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Get lock roles
+    /// </summary>
+    /// <param name="lockId"></param>
+    /// <returns></returns>
+    [HttpGet("{lockId:guid}")]
+    public async Task<ActionResult<ResponseModel<List<LockRoleResponse>>>> GetLockRoles(Guid lockId)
+    {
+        var query = new GetLockRolesQuery {LockId = lockId};
+        var validationResult = await new GetLockRolesQueryValidator().ValidateAsync(query);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(query);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Assign role to lock
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("role/save")]
+    public async Task<ActionResult<ResponseModel<AssignLockToRoleResponse>>> AddLockRole(AssignLockRoleCommand command)
+    {
+        var validationResult = await new AssignLockRoleCommandValidator().ValidateAsync(command);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(command);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Remove role from lock
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("role/delete")]
+    public async Task<ActionResult<ResponseModel<RemoveLockFromRoleResponse>>> RemoveLockRole(RemoveLockRoleCommand command)
+    {
+        var validationResult = await new RemoveLockRoleCommandValidator().ValidateAsync(command);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(command);
         }
         return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
     }

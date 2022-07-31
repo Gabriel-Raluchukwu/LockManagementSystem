@@ -22,6 +22,7 @@ public class ExceptionMiddleware
     public async Task InvokeAsync(HttpContext httpContext)
     {
         var response = httpContext.Response;
+        response.ContentType = "application/json";
         var responseModel = new ResponseModel<string>();
         try
         {
@@ -53,7 +54,6 @@ public class ExceptionMiddleware
         }
         finally
         {
-            response.ContentType = "application/json";
             var responseString = JsonConvert.SerializeObject(responseModel);
             await response.WriteAsync(responseString);
         }

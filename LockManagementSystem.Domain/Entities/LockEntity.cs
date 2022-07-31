@@ -13,4 +13,6 @@ public class LockEntity : Entity
     public DateTime DateInstalled { get; set; }
     
     public OfficeEntity Office { get; set; }
+    
+    public List<LockRoleEntity> LockRoles { get; set; }
 }

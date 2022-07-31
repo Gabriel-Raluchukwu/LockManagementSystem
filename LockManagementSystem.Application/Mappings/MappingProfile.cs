@@ -1,7 +1,9 @@
 using AutoMapper;
 using LockManagementSystem.Application.Models.Commands.Employee;
+using LockManagementSystem.Application.Models.Commands.EmployeeRole;
 using LockManagementSystem.Application.Models.Commands.EventLog;
 using LockManagementSystem.Application.Models.Commands.Lock;
+using LockManagementSystem.Application.Models.Commands.LockRole;
 using LockManagementSystem.Application.Models.Commands.Office;
 using LockManagementSystem.Application.Models.Commands.Roles;
 using LockManagementSystem.Application.Models.Responses;
@@ -44,5 +46,19 @@ public class MappingProfile : Profile
         CreateMap<RoleEntity, RoleResponse>();
         CreateMap<RoleEntity, CreateRoleResponse>();
         CreateMap<RoleEntity, UpdateRoleResponse>();
+
+        //Employee Roles
+        CreateMap<AssignEmployeeRoleCommand, EmployeeRoleEntity>();
+        CreateMap<EmployeeRoleEntity, EmployeeRoleResponse>();
+        CreateMap<EmployeeRoleEntity, AssignEmployeeToRoleResponse>();
+        CreateMap<EmployeeRoleEntity, RemoveEmployeeFromRoleResponse>();
+        CreateMap<RoleEntity, EmployeeRoleResponse>();
+        
+        //Lock Roles
+        CreateMap<AssignLockRoleCommand, LockRoleEntity>();
+        CreateMap<LockRoleEntity, LockRoleResponse>();
+        CreateMap<LockRoleEntity, AssignLockToRoleResponse>();
+        CreateMap<LockRoleEntity, RemoveLockFromRoleResponse>();
+        CreateMap<RoleEntity, LockRoleResponse>();
     }
 }

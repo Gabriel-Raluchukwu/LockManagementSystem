@@ -1,5 +1,7 @@
 using LockManagementSystem.Application.Models.Commands.Employee;
+using LockManagementSystem.Application.Models.Commands.EmployeeRole;
 using LockManagementSystem.Application.Models.Queries.Employee;
+using LockManagementSystem.Application.Models.Queries.EmployeeRole;
 using LockManagementSystem.Application.Models.Responses;
 using MediatR;
 
@@ -75,6 +77,55 @@ public class EmployeeController : ControllerBase
         if (validationResult.IsValid)
         {
             return await _mediator.Send(query);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Get Employee roles
+    /// </summary>
+    /// <param name="employeeId"></param>
+    /// <returns></returns>
+    [HttpGet("{employeeId:guid}")]
+    public async Task<ActionResult<ResponseModel<PagedResponse<EmployeeRoleResponse>>>> GetEmployeeRoles(Guid employeeId)
+    {
+        var query = new GetEmployeeRolesQuery {EmployeeId = employeeId};
+        var validationResult = await new GetEmployeeRolesQueryValidator().ValidateAsync(query);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(query);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Assign role to employee
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("role/save")]
+    public async Task<ActionResult<ResponseModel<AssignEmployeeToRoleResponse>>> AddEmployeeRole(AssignEmployeeRoleCommand command)
+    {
+        var validationResult = await new AssignEmployeeRoleCommandValidator().ValidateAsync(command);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(command);
+        }
+        return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
+    }
+    
+    /// <summary>
+    /// Remove role from employee
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("role/delete")]
+    public async Task<ActionResult<ResponseModel<RemoveEmployeeFromRoleResponse>>> RemoveEmployeeRole(RemoveEmployeeRoleCommand command)
+    {
+        var validationResult = await new RemoveEmployeeRoleCommandValidator().ValidateAsync(command);
+        if (validationResult.IsValid)
+        {
+            return await _mediator.Send(command);
         }
         return BadRequest(validationResult.Errors.Select(p => p.ErrorMessage).ToList());
     }

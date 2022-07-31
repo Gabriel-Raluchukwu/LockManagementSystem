@@ -6,6 +6,7 @@ public enum LockEventStatusEnum
     Opened,
     Closed,
     Pending,
-    Blocked,
+    Error,
+    Unauthorized,
     UnderMaintenance,
 }

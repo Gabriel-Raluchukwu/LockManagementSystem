@@ -31,10 +31,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.ConfigureExceptionMiddleware();
+
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.ConfigureExceptionMiddleware();
 
 app.Run();
