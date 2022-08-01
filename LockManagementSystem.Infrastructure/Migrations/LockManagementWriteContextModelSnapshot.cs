@@ -99,20 +99,20 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d89c582e-7744-4511-98fc-d7c1c4c9a0b1"),
+                            Id = new Guid("7935586b-78b7-4f2d-97ba-c05e66f89aa3"),
                             Address = "No 12, Palace road",
                             Country = "Nigeria",
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3870),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(20),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "default.user@clay.com",
-                            EmploymentDate = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3880),
+                            EmploymentDate = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(20),
                             FirstName = "default",
                             Gender = "Male",
                             IsDeprecated = false,
                             LastName = "user",
                             Nationality = "Nigerian",
-                            OfficeId = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
+                            OfficeId = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
                             PhoneNumber = "23411111111",
                             State = "Lagos"
                         });
@@ -145,6 +145,17 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7935586b-78b7-4f2d-97ba-c05e66f89aa3"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(40),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Email = "default.user@clay.com",
+                            IsDeprecated = false,
+                            PasswordHash = "#CLAY#2000$rFAUch4AxrxF+3gvCxY3IjdZHpwNUMNUh84rPQ39QOmNEPyl"
+                        });
                 });
 
             modelBuilder.Entity("LockManagementSystem.Domain.Entities.EmployeeRoleEntity", b =>
@@ -178,6 +189,44 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.HasIndex("EmployeeId", "RoleId");
 
                     b.ToTable("EmployeeRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e7136117-2f93-4f86-b99a-7c300b340625"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(150),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            EmployeeId = new Guid("7935586b-78b7-4f2d-97ba-c05e66f89aa3"),
+                            IsDeprecated = false,
+                            RoleId = new Guid("73877ecb-b7a5-4204-8dde-5ac7efa8a6b4")
+                        },
+                        new
+                        {
+                            Id = new Guid("baea5a2d-ca2a-4118-ac40-f25cf7a7dda8"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(150),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            EmployeeId = new Guid("7935586b-78b7-4f2d-97ba-c05e66f89aa3"),
+                            IsDeprecated = false,
+                            RoleId = new Guid("c842fdb8-3a25-4419-b704-66bc6f8524df")
+                        },
+                        new
+                        {
+                            Id = new Guid("f3fd95b2-b3c9-4fee-89cb-49ded8e3a3f6"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(150),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            EmployeeId = new Guid("7935586b-78b7-4f2d-97ba-c05e66f89aa3"),
+                            IsDeprecated = false,
+                            RoleId = new Guid("7897165a-9025-474a-be4d-1e5434e546cb")
+                        },
+                        new
+                        {
+                            Id = new Guid("24bf6c52-8f55-4118-90b4-85bee8fd831f"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(160),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            EmployeeId = new Guid("7935586b-78b7-4f2d-97ba-c05e66f89aa3"),
+                            IsDeprecated = false,
+                            RoleId = new Guid("a6df5647-d432-474f-9f2c-e8a8a1c3c966")
+                        });
                 });
 
             modelBuilder.Entity("LockManagementSystem.Domain.Entities.EventLogEntity", b =>
@@ -271,29 +320,100 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d3572785-6459-4388-8311-e2d034ecd2f3"),
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3900),
+                            Id = new Guid("2de68316-75ac-4eed-b055-88dc4d1f2d2b"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(90),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DateInstalled = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3900),
+                            DateInstalled = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(90),
                             IsDeprecated = false,
                             Location = "Main Entrance, Ground floor",
                             Model = "Clay Lock 2.0",
-                            OfficeId = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
+                            OfficeId = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
                             SerialNo = "123454fd",
-                            UpdatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3900)
+                            UpdatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(90)
                         },
                         new
                         {
-                            Id = new Guid("ce1dc3c6-2ac1-4ddb-95d0-76cc90c0d126"),
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3900),
+                            Id = new Guid("cf1c460d-f74d-48b5-b358-e5649145009e"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(90),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DateInstalled = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3910),
+                            DateInstalled = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(100),
                             IsDeprecated = false,
                             Location = "Storage Entrance, Ground floor",
                             Model = "Clay Lock 2.0",
-                            OfficeId = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
+                            OfficeId = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
                             SerialNo = "40478872",
-                            UpdatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3900)
+                            UpdatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(90)
+                        });
+                });
+
+            modelBuilder.Entity("LockManagementSystem.Domain.Entities.LockRoleEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeprecatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeprecated")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("LockId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LockId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("LockRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("29d85de4-311e-42e7-9fb4-bc10c0dfaa45"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(170),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeprecated = false,
+                            LockId = new Guid("2de68316-75ac-4eed-b055-88dc4d1f2d2b"),
+                            RoleId = new Guid("c842fdb8-3a25-4419-b704-66bc6f8524df")
+                        },
+                        new
+                        {
+                            Id = new Guid("6da0949f-b038-4bd5-ae98-a9967c019a14"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(170),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeprecated = false,
+                            LockId = new Guid("cf1c460d-f74d-48b5-b358-e5649145009e"),
+                            RoleId = new Guid("73877ecb-b7a5-4204-8dde-5ac7efa8a6b4")
+                        },
+                        new
+                        {
+                            Id = new Guid("f1dc7c34-17d9-45ed-bbbb-05b4659d0a11"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(180),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeprecated = false,
+                            LockId = new Guid("cf1c460d-f74d-48b5-b358-e5649145009e"),
+                            RoleId = new Guid("a6df5647-d432-474f-9f2c-e8a8a1c3c966")
+                        },
+                        new
+                        {
+                            Id = new Guid("6753a823-fb49-4e9c-9694-1037c60d0b5d"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(180),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            IsDeprecated = false,
+                            LockId = new Guid("cf1c460d-f74d-48b5-b358-e5649145009e"),
+                            RoleId = new Guid("7897165a-9025-474a-be4d-1e5434e546cb")
                         });
                 });
 
@@ -350,17 +470,17 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
+                            Id = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
                             Address = "No 20, Johnson avenue",
                             Country = "Nigeria",
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3700),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 948, DateTimeKind.Utc).AddTicks(9810),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Locks and Security",
                             IsDeprecated = false,
                             Name = "Clay Locks",
                             NumberOfDoors = 24,
                             NumberOfLocks = 12,
-                            UpdatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3700)
+                            UpdatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 948, DateTimeKind.Utc).AddTicks(9810)
                         });
                 });
 
@@ -410,47 +530,47 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("aa697c3c-1276-4e5c-9fe4-94b673a20562"),
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3930),
+                            Id = new Guid("73877ecb-b7a5-4204-8dde-5ac7efa8a6b4"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(120),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Administrator role",
                             IsDeprecated = false,
                             Name = "Administrator",
-                            OfficeId = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
-                            UpdatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3930)
+                            OfficeId = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
+                            UpdatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(120)
                         },
                         new
                         {
-                            Id = new Guid("75bd15c8-01e5-4a2d-adb6-98c48be67f8a"),
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3930),
+                            Id = new Guid("c842fdb8-3a25-4419-b704-66bc6f8524df"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(130),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Employee role",
                             IsDeprecated = false,
                             Name = "Employee",
-                            OfficeId = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
-                            UpdatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3930)
+                            OfficeId = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
+                            UpdatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(130)
                         },
                         new
                         {
-                            Id = new Guid("4191f7bc-05ab-4963-8750-4d5107a57e10"),
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3930),
+                            Id = new Guid("7897165a-9025-474a-be4d-1e5434e546cb"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(130),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Director role",
                             IsDeprecated = false,
                             Name = "Director",
-                            OfficeId = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
-                            UpdatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3940)
+                            OfficeId = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
+                            UpdatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(130)
                         },
                         new
                         {
-                            Id = new Guid("00998faa-2c73-43f2-a8c4-f97516d696f4"),
-                            CreatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3940),
+                            Id = new Guid("a6df5647-d432-474f-9f2c-e8a8a1c3c966"),
+                            CreatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(130),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Director role",
                             IsDeprecated = false,
                             Name = "OfficeManager",
-                            OfficeId = new Guid("05e27dcc-3917-49c0-8498-b957e82fbabc"),
-                            UpdatedAt = new DateTime(2022, 7, 31, 18, 8, 39, 231, DateTimeKind.Utc).AddTicks(3940)
+                            OfficeId = new Guid("a76662b3-dfc5-43e9-a5af-74e9c0cb3a87"),
+                            UpdatedAt = new DateTime(2022, 8, 1, 20, 21, 16, 949, DateTimeKind.Utc).AddTicks(130)
                         });
                 });
 
@@ -493,6 +613,25 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.Navigation("Office");
                 });
 
+            modelBuilder.Entity("LockManagementSystem.Domain.Entities.LockRoleEntity", b =>
+                {
+                    b.HasOne("LockManagementSystem.Domain.Entities.LockEntity", "Lock")
+                        .WithMany("LockRoles")
+                        .HasForeignKey("LockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LockManagementSystem.Domain.Entities.RoleEntity", "Role")
+                        .WithMany("LockRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lock");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("LockManagementSystem.Domain.Entities.RoleEntity", b =>
                 {
                     b.HasOne("LockManagementSystem.Domain.Entities.OfficeEntity", "Office")
@@ -511,6 +650,11 @@ namespace LockManagementSystem.Infrastructure.Migrations
                     b.Navigation("EmployeeRoles");
                 });
 
+            modelBuilder.Entity("LockManagementSystem.Domain.Entities.LockEntity", b =>
+                {
+                    b.Navigation("LockRoles");
+                });
+
             modelBuilder.Entity("LockManagementSystem.Domain.Entities.OfficeEntity", b =>
                 {
                     b.Navigation("Locks");
@@ -521,6 +665,8 @@ namespace LockManagementSystem.Infrastructure.Migrations
             modelBuilder.Entity("LockManagementSystem.Domain.Entities.RoleEntity", b =>
                 {
                     b.Navigation("EmployeeRoles");
+
+                    b.Navigation("LockRoles");
                 });
 #pragma warning restore 612, 618
         }

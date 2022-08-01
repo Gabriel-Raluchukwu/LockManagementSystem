@@ -17,7 +17,8 @@ public class LockManagementWriteContext : DbContext
     public DbSet<EventLogEntity> EventLogs { get; set; }
     public DbSet<RoleEntity> Roles { get; set; }
     public DbSet<EmployeeRoleEntity> EmployeeRoles { get; set; }
-    
+    public DbSet<LockRoleEntity> LockRoles { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -60,11 +61,24 @@ public class LockManagementWriteContext : DbContext
                 DateOfBirth = DateTime.MinValue
             });
 
+        var employeeId = employeeDetailEntityId;
+        
+        modelBuilder.Entity<EmployeeEntity>()
+            .HasData(new EmployeeEntity
+            {
+                Id = employeeId,
+                Email = "default.user@clay.com",
+                PasswordHash = "#CLAY#2000$rFAUch4AxrxF+3gvCxY3IjdZHpwNUMNUh84rPQ39QOmNEPyl", // Password hash for 'Login@1234'
+            });
+
+        var entranceLockId = Guid.NewGuid();
+        var storageLockId = Guid.NewGuid();
+        
         modelBuilder.Entity<LockEntity>()
             .HasData(
                 new LockEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = entranceLockId,
                     Location = "Main Entrance, Ground floor",
                     OfficeId = officeId,
                     SerialNo = "123454fd",
@@ -73,7 +87,7 @@ public class LockManagementWriteContext : DbContext
                 },
                 new LockEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = storageLockId,
                     Location = "Storage Entrance, Ground floor",
                     OfficeId = officeId,
                     SerialNo = "40478872",
@@ -115,6 +129,60 @@ public class LockManagementWriteContext : DbContext
                     OfficeId = officeId,
                     Name = "OfficeManager",
                     Description = "Director role"
+                });
+
+        modelBuilder.Entity<EmployeeRoleEntity>()
+            .HasData(
+                new EmployeeRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    EmployeeId = employeeId,
+                    RoleId = roleAdminId,
+                },
+                new EmployeeRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    EmployeeId = employeeId,
+                    RoleId = roleEmployeeId,
+                },
+                new EmployeeRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    EmployeeId = employeeId,
+                    RoleId = roleDirectorId,
+                },
+                new EmployeeRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    EmployeeId = employeeId,
+                    RoleId = roleManagerId,
+                });
+
+        modelBuilder.Entity<LockRoleEntity>()
+            .HasData(
+                new LockRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    LockId = entranceLockId,
+                    RoleId = roleEmployeeId
+                },
+                new LockRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    LockId = storageLockId,
+                    RoleId = roleAdminId
+                },
+                new LockRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    LockId = storageLockId,
+                    RoleId = roleManagerId
+                },
+                new LockRoleEntity
+                {
+                    Id = Guid.NewGuid(),
+                    LockId = storageLockId,
+                    RoleId = roleDirectorId
                 });
     }
 }

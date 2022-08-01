@@ -4,9 +4,11 @@ using LockManagementSystem.Application.Models.Queries.Employee;
 using LockManagementSystem.Application.Models.Queries.EmployeeRole;
 using LockManagementSystem.Application.Models.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LockManagementSystem.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class EmployeeController : ControllerBase
@@ -23,6 +25,7 @@ public class EmployeeController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpPost("signup")]
     public async Task<ActionResult<ResponseModel<SignUpResponse>>> SignUp(SignUpCommand command)
     {
@@ -39,6 +42,7 @@ public class EmployeeController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpPost("signin")]
     public async Task<ActionResult<ResponseModel<SignInResponse>>> SignUp(SignInCommand command)
     {
@@ -85,11 +89,13 @@ public class EmployeeController : ControllerBase
     /// Get Employee roles
     /// </summary>
     /// <param name="employeeId"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
     /// <returns></returns>
-    [HttpGet("{employeeId:guid}")]
-    public async Task<ActionResult<ResponseModel<PagedResponse<EmployeeRoleResponse>>>> GetEmployeeRoles(Guid employeeId)
+    [HttpGet("role/{employeeId:guid}")]
+    public async Task<ActionResult<ResponseModel<PagedResponse<EmployeeRoleResponse>>>> GetEmployeeRoles(Guid employeeId, [FromQuery] int? pageSize, int? pageNumber)
     {
-        var query = new GetEmployeeRolesQuery {EmployeeId = employeeId};
+        var query = new GetEmployeeRolesQuery {EmployeeId = employeeId, PageNumber = pageNumber ?? 1, PageSize = pageSize ?? 10};
         var validationResult = await new GetEmployeeRolesQueryValidator().ValidateAsync(query);
         if (validationResult.IsValid)
         {

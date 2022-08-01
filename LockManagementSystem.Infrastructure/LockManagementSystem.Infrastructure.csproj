@@ -19,7 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations" />
+      <Compile Remove="Migrations\20220801201932_AddMigrationAndSeedEntities.cs" />
+      <Compile Remove="Migrations\20220801201932_AddMigrationAndSeedEntities.Designer.cs" />
     </ItemGroup>
 
 </Project>

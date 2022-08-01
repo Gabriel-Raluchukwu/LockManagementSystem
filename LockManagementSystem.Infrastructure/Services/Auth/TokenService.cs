@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using LockManagementSystem.Application.Interface.Auth;
 using LockManagementSystem.Application.Models.Responses;
+using LockManagementSystem.Application.Utility;
 using LockManagementSystem.Domain.Entities;
 using LockManagementSystem.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +39,7 @@ public class TokenService : ITokenService
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new ("userid", employee.Id.ToString()),
+                new (Constants.EmployeeIdClaim, employee.Id.ToString()),
                 new (ClaimTypes.Email, employee.Email)
             }.Union(employeeRoles)),
             Expires = expiresIn,

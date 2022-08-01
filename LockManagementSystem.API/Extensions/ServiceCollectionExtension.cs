@@ -1,3 +1,5 @@
+using LockManagementSystem.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 namespace LockManagementSystem.Extensions;
@@ -6,6 +8,7 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
     {
+        services.AddRouting(options => options.LowercaseUrls = true);
         services.AddSwaggerGen(swagger =>
         {
             swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -39,5 +42,11 @@ public static class ServiceCollectionExtension
         });
         
         return services;
+    }
+    
+    public static void MigrateDatabase(this WebApplication app)
+    {
+        var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<LockManagementWriteContext>();
+        context.Database.Migrate();
     }
 }

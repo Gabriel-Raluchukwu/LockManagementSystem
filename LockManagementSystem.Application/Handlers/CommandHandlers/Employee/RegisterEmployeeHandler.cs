@@ -32,7 +32,7 @@ public class RegisterEmployeeHandler : IRequestHandler<RegisterEmployeeCommand, 
         
         if (string.IsNullOrWhiteSpace(command.Email))
         {
-            var generatedEmail = $"{command.FirstName}.{command.LastName}@clay.com";
+            var generatedEmail = $"{command.FirstName.ToLower()}.{command.LastName.ToLower()}@clay.com";
             command.Email = generatedEmail.ToLower();
         }
 

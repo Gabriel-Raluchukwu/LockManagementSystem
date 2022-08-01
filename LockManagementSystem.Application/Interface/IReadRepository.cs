@@ -17,7 +17,7 @@ public interface IReadRepository<T> where T : BaseEntity
     public Task<PagedModel<T>> GetPagedMultiple<TKey>(int pageNumber, int pageSize, Expression<Func<T, bool>> searchPredicate, 
         Expression<Func<T, TKey>> orderPredicate);
     
-    public T? GetBy(Expression<Func<T, bool>> predicate);
+    public T GetBy(Expression<Func<T, bool>> predicate);
 
-    public Task<T?> GetByAsync(Expression<Func<T, bool>> predicate);
+    public Task<T> GetByAsync(Expression<Func<T, bool>> predicate);
 }

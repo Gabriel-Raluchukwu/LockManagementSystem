@@ -1,6 +1,6 @@
 namespace LockManagementSystem.Application.Models.Responses;
 
-public class LockRoleResponse 
+public class LockRoleResponse : BaseResponse
 {
     public string Name { get; set; }
 

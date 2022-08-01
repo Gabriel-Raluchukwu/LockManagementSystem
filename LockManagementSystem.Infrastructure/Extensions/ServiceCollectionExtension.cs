@@ -4,6 +4,7 @@ using LockManagementSystem.Application.Interface.EventLog;
 using LockManagementSystem.Infrastructure.Services;
 using LockManagementSystem.Infrastructure.Services.Auth;
 using LockManagementSystem.Infrastructure.Services.Repositories.EventLog;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LockManagementSystem.Infrastructure.Extensions;
@@ -14,6 +15,8 @@ public static class ServiceCollectionExtension
     {
         services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
         services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         
         //custom services
         services.AddTransient<IEventLogReadRepository, EventLogReadRepository>();

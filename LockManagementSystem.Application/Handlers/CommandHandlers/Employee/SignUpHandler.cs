@@ -11,14 +11,16 @@ namespace LockManagementSystem.Application.Handlers.CommandHandlers.Employee;
 public class SignUpHandler : IRequestHandler<SignUpCommand, ResponseModel<SignUpResponse>>
 {
     private readonly IReadRepository<EmployeeDetailEntity> _employeeDetailReadRepository;
+    private readonly IReadRepository<EmployeeEntity> _employeeReadRepository;
     private readonly IPasswordService _passwordService;
     private readonly IAuthService _authService;
     private readonly ITokenService _tokenService;
     
     public SignUpHandler(IReadRepository<EmployeeDetailEntity> employeeDetailReadRepository, IPasswordService passwordService,
-        IAuthService authService, ITokenService tokenService)
+        IReadRepository<EmployeeEntity> employeeReadRepository, IAuthService authService, ITokenService tokenService)
     {
         _employeeDetailReadRepository = employeeDetailReadRepository;
+        _employeeReadRepository = employeeReadRepository;
         _passwordService = passwordService;
         _authService = authService;
         _tokenService = tokenService;
@@ -31,10 +33,17 @@ public class SignUpHandler : IRequestHandler<SignUpCommand, ResponseModel<SignUp
         {
             throw new NotFoundException("Employee Detail not found. Please contact Clay helpdesk.");
         }
+        
+        var duplicate = await _employeeReadRepository.GetByAsync(p => p.Id == command.EmployeeDetailId);
+        if (duplicate is not null)
+        {
+            throw new BadRequestException("Employee already exists. Please contact Clay helpdesk.");
+        } 
 
         var passwordHash = _passwordService.Hash(command.Password);
         var employee = new EmployeeEntity
         {
+            Id = command.EmployeeDetailId,
             Email = employeeDetail.Email,
             PasswordHash = passwordHash,
         };

@@ -2,9 +2,11 @@ using LockManagementSystem.Application.Models.Commands.Office;
 using LockManagementSystem.Application.Models.Queries.Office;
 using LockManagementSystem.Application.Models.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LockManagementSystem.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class OfficeController : ControllerBase

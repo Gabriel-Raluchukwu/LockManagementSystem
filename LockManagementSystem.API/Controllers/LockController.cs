@@ -1,21 +1,27 @@
+using LockManagementSystem.Application.Interface.Auth;
 using LockManagementSystem.Application.Models.Commands.Lock;
 using LockManagementSystem.Application.Models.Commands.LockRole;
 using LockManagementSystem.Application.Models.Queries.Lock;
 using LockManagementSystem.Application.Models.Queries.LockRole;
 using LockManagementSystem.Application.Models.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LockManagementSystem.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class LockController : ControllerBase
 {
     private readonly IMediator _mediator;
+
+    private readonly IAuthService _authService;
     
-    public LockController(IMediator mediator)
+    public LockController(IMediator mediator, IAuthService authService)
     {
         _mediator = mediator;
+        _authService = authService;
     }
     
     /// <summary>
@@ -94,6 +100,11 @@ public class LockController : ControllerBase
     [HttpPost("open")]
     public async Task<ActionResult<ResponseModel<OpenLockResponse>>> OpenLock(OpenLockCommand command)
     {
+        if (!await _authService.HasLockAccess(command.EmployeeId, command.LockId))
+        {
+            return Unauthorized(new ResponseModel<OpenLockResponse>());
+        }
+        
         var validationResult = await new OpenLockCommandValidator().ValidateAsync(command);
         if (validationResult.IsValid)
         {
@@ -107,9 +118,10 @@ public class LockController : ControllerBase
     /// </summary>
     /// <param name="lockId"></param>
     /// <returns></returns>
-    [HttpGet("{lockId:guid}")]
+    [HttpGet("role/{lockId:guid}")]
     public async Task<ActionResult<ResponseModel<List<LockRoleResponse>>>> GetLockRoles(Guid lockId)
     {
+        
         var query = new GetLockRolesQuery {LockId = lockId};
         var validationResult = await new GetLockRolesQueryValidator().ValidateAsync(query);
         if (validationResult.IsValid)

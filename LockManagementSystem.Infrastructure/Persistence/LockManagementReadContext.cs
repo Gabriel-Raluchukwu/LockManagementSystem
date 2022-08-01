@@ -17,6 +17,7 @@ public class LockManagementReadContext : DbContext
     public DbSet<EventLogEntity> EventLogs { get; set; }
     public DbSet<RoleEntity> Roles { get; set; }
     public DbSet<EmployeeRoleEntity> EmployeeRoles { get; set; }
+    public DbSet<LockRoleEntity> LockRoles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

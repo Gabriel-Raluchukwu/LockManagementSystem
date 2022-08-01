@@ -27,11 +27,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.MigrateDatabase();
 }
 
 app.UseHttpsRedirection();
 
 app.ConfigureExceptionMiddleware();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

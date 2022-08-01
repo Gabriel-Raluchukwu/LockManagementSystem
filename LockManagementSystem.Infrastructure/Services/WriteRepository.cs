@@ -30,6 +30,7 @@ public class WriteRepository<T> : IWriteRepository<T> where T : BaseEntity
     {
         entity.IsDeprecated = true;
         entity.DeprecatedAt = DateTime.UtcNow;
+        Update(entity);
     }
 
     public void Update(T entity)

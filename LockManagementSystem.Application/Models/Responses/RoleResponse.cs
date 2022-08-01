@@ -1,6 +1,6 @@
 namespace LockManagementSystem.Application.Models.Responses;
 
-public class RoleResponse
+public class RoleResponse : BaseResponse
 {
     public Guid OfficeId { get; set; }
     

@@ -1,21 +1,31 @@
 using LockManagementSystem.Application.Attributes;
+using LockManagementSystem.Application.Interface.Auth;
 using LockManagementSystem.Application.Models.Commands.EventLog;
 using LockManagementSystem.Application.Models.Queries.EventLog;
 using LockManagementSystem.Application.Models.Responses;
+using LockManagementSystem.Application.Utility;
 using LockManagementSystem.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LockManagementSystem.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class EventLogController : ControllerBase
 {
     private readonly IMediator _mediator;
     
-    public EventLogController(IMediator mediator)
+    private readonly IAuthService _authService;
+    
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    
+    public EventLogController(IMediator mediator, IAuthService authService, IHttpContextAccessor httpContextAccessor)
     {
         _mediator = mediator;
+        _authService = authService;
+        _httpContextAccessor = httpContextAccessor;
     }
     
     /// <summary>
@@ -69,6 +79,13 @@ public class EventLogController : ControllerBase
     public async Task<ActionResult<ResponseModel<PagedResponse<EventLogResponse>>>> GetLogEvent([FromQuery] Guid? userId, Guid? officeId, Guid? lockId, LockEventTypeEnum? type,
         LockEventStatusEnum? status, DateTime? start, DateTime? end, int? pageNumber, int? pageSize)
     {
+        var id = _httpContextAccessor.HttpContext?.User.FindFirst(Constants.EmployeeIdClaim)?.Value ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(id) || !Guid.TryParse(id, out var employeeId) 
+            || !await _authService.HasAccess(employeeId, new List<string>{"Director", "Administrator", "OfficeManager"}))
+        {
+            return Unauthorized(new ResponseModel<PagedResponse<EventLogResponse>>());
+        }
+        
         var query = new GetEventLogsQuery
         {
             UserId = userId,
