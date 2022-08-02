@@ -33,6 +33,7 @@ public class EventLogController : ControllerBase
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
+    [AllowAnonymous]
     [LogEventAuth]
     [HttpPost("log")]
     public async Task<ActionResult<ResponseModel<CreateEventLogResponse>>> LogEvent(CreateEventLogCommand command)
